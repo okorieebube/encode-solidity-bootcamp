@@ -50,7 +50,11 @@ contract LinkToken {
     // removeFromHolders[msg.sender]
     /*
         should be called after updating state
-        check if sender balance is zero: remove from holders
+        check if sender balance is zero: 
+            if yes;
+            get index from holderIndex mapping
+            delete from holders array
+            subtract from countHolders
      */
 
     function removeFromHolders(address sender) internal returns (bool) {}
