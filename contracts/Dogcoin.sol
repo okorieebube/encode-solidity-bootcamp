@@ -20,9 +20,9 @@ contract LinkToken {
     mapping(address => mapping(address => uint256)) public allowance;
 
     constructor(uint256 _initalSupply) {
-        balanceOf[msg.sender] = _initalSupply;
-        currentHolders[] = msg.sender;
         totalSupply = _initalSupply;
+        balanceOf[msg.sender] = _initalSupply;
+        addToHolders(msg.sender);
     }
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
@@ -31,12 +31,6 @@ contract LinkToken {
         address indexed _spender,
         uint256 _value
     );
-
-    // addToHolders[recipient]
-    /*
-        should be called before updating state
-        check if the recipient bal is zero: add to holders
-     */
 
     function addToHolders(address recipient) internal returns (bool) {
         if (balanceOf[recipient] == 0) {
@@ -47,17 +41,17 @@ contract LinkToken {
         return true;
     }
 
-    // removeFromHolders[msg.sender]
-    /*
-        should be called after updating state
-        check if sender balance is zero: 
-            if yes;
-            get index from holderIndex mapping
-            delete from holders array
-            subtract from countHolders
-     */
-
-    function removeFromHolders(address sender) internal returns (bool) {}
+    function removeFromHolders(address sender) internal returns (bool) {
+        if (balanceOf[sender] == 0) {
+            address lastHolder = currentHolders[countCurrentHolders - 1];
+            uint256 senderIndex = holderIndex[sender];
+            currentHolders[senderIndex] = lastHolder;
+            delete holderIndex[sender];
+            holderIndex[lastHolder] = senderIndex;
+            countCurrentHolders--;
+        }
+        return true;
+    }
 
     function transfer(address _to, uint256 _value)
         public
