@@ -3,7 +3,7 @@ pragma solidity 0.8.0;
 
 import "hardhat/console.sol";
 
-contract LinkToken {
+contract Dogcoin {
     string public name = "DogCoin";
     string public symbol = "DOG";
     string public version = "v1.0";

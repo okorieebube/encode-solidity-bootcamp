@@ -26,6 +26,7 @@
     "compile": "npx hardhat compile",
     "test": "hardhat test --network hardhat",
     "run": "npx hardhat run --network hardhat scripts/run.js",
+    "test:deploy_proxy": "npx hardhat test --network hardhat test/05_PROXIES/test.js",
     "test:timelock": "hardhat test --network hardhat ./test/TimeLock-test.js",
     "deploy:localhost": "npx hardhat run --network localhost scripts/run.js"
   },
